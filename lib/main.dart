@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/HttpExample.dart';
+import 'DynamicListView.dart';
 import 'Login.dart';
 
 void main() {
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: NetworkExample(),
+      home: DynamicList(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
