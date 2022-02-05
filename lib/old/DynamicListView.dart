@@ -8,7 +8,7 @@ class DynamicList extends StatefulWidget {
 }
 
 class _DynamicListState extends State<DynamicList> {
-  var dataList= [
+  var listData = [
     "Roll 1",
     "Roll 2",
     "Roll 3",
@@ -20,18 +20,18 @@ class _DynamicListState extends State<DynamicList> {
     return Scaffold(
       appBar: AppBar(),
       body: ListView.builder(
-          itemCount: dataList.length,
+          itemCount: listData.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              title: Text(dataList[index]),
+              title: Text(listData[index]),
               subtitle: Text("Sub title"),
               leading: Text((index+1).toString()),
             );
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           setState(() {
-            dataList.add("Roll ${dataList.length+1}");
+            listData.add("Roll ${listData.length+1}");
           });
         },
         child: Icon(Icons.add),

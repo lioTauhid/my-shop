@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:my_shop/HttpExample.dart';
+import 'package:my_shop/Profile.dart';
 import 'DynamicListView.dart';
 import 'Login.dart';
 
-void main() {
+Future<void> main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -73,7 +76,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DynamicList(),
+      home: Profile(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),
