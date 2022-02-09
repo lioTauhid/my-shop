@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:my_shop/HttpExample.dart';
-import 'package:my_shop/Profile.dart';
-import 'DynamicListView.dart';
-import 'Login.dart';
+import 'package:my_shop/Home.dart';
+import 'package:my_shop/Login.dart';
+
+import 'Profile.dart';
+
 
 Future<void> main() async {
   await GetStorage.init();
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Profile(),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal),

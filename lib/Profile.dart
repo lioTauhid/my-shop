@@ -9,7 +9,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController controller= TextEditingController();
+  TextEditingController controller=TextEditingController();
+  String name= "";
   var localData= GetStorage();
 
   @override
@@ -17,7 +18,7 @@ class _ProfileState extends State<Profile> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      controller.text= localData.read("name");
+      name= localData.read("userName");
     });
   }
 
@@ -28,48 +29,28 @@ class _ProfileState extends State<Profile> {
       body: Container(
         height: Size.infinite.height,
         width: Size.infinite.width,
-        color: Colors.blueGrey,
         child: Column(
           children: [
-            SizedBox(
-              height: 40,
-            ),
+            SizedBox(height: 30,),
             ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                  "https://st3.depositphotos.com/4060975/17730/v/1600/depositphotos_177308034-stock-illustration-boss-vector-icon.jpg",
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.fill),
+              child:Image.network("https://1.bp.blogspot.com/-bUpvvgWGySY/YSo45ofhjhI/AAAAAAAAWKY/zXWOk0hTWycsJ5wKDP25rb53MolixAzUwCLcBGAsYHQ/s0/cute-dp-images-cute-profile-pictures%2B%252817%2529.jpg",
+              height: 100,
+                width: 100,
+                fit: BoxFit.fill,
+              ),
             ),
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Name : ${controller.text}",
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            Text(
-              "Profession : Md Tauhid",
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-            Text(
-              "Phone Number : Md Tauhid",
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-            Text(
-              "Eamil : Md Tauhid",
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            MaterialButton(
-              onPressed: () {
-                showMyDialog(context);
-              },
+            SizedBox(height: 40,),
+            Text("User Name : ${name}", style: TextStyle(fontSize: 20),),
+            Text("Phone Number : Md Tauhid", style: TextStyle(fontSize: 16),),
+            Text("Email : Md Tauhid", style: TextStyle(fontSize: 16),),
+            Text("Address : Md Tauhid", style: TextStyle(fontSize: 16),),
+            SizedBox(height: 40,),
+            MaterialButton(onPressed: (){
+              showMyDialog(context);
+            },
+            child: Text("Update Profile"),
               color: Colors.teal,
-              child: Text("Update Profile"),
             )
           ],
         ),
@@ -101,11 +82,12 @@ class _ProfileState extends State<Profile> {
               child: Text('Confirm'),
               onPressed: () {
                 // save data
-                localData.write("name", controller.text);
-                setState(() {});
+                localData.write("userName", controller.text);
+                setState(() {
+                  name= controller.text;
+                });
                 Navigator.of(context).pop();
-
-                print(localData.read("name"));
+                print(localData.read("userName"));
               },
             ),
             TextButton(
