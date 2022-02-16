@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_shop/Home.dart';
 import 'package:my_shop/Login.dart';
@@ -7,6 +8,8 @@ import 'Profile.dart';
 
 
 Future<void> main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await GetStorage.init();
   runApp(MyApp());
 }
@@ -76,6 +79,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
+
     return MaterialApp(
       home: HomePage(),
       debugShowCheckedModeBanner: false,

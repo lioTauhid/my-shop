@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../JsonDataModel.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,6 +13,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int currentPage = 0;
   var pageList= [];
   late TabController tabController;
+  List<Product> productList= [];
 
   @override
   void initState() {
@@ -16,6 +21,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     tabController= TabController(length: 3, vsync: this);
     initPages();
+    getProductsData();
+  }
+
+  void getProductsData(){
+    var response= http.get(Uri.parse("https://jsonplaceholder.typicode.com/photos"));
+    response.then((value) {
+      setState(() {
+        productList=productFromJson(value.body);
+      });
+      print(productList[2].url);
+    });
   }
 
   void initPages(){
@@ -58,7 +74,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               TabBar(tabs: [
                 Tab(text: "Catagory",),
-                Tab(text: "Brands",),
+                Tab(text: "Brand",),
                 Tab(text: "Shop",),
               ],
                 controller: tabController,
@@ -88,23 +104,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    Text("Tab2"),
-                    Text("Tab3"),
+                    Text("tab2"),
+                    Text("tab3"),
                   ],
                   controller: tabController,
                 ),
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Flash Sale"),
-                  TextButton(
-                    onPressed: () {  },
-                    child: Text("Show all"),
-                  ),
+                  TextButton(onPressed: (){
+                    getProductsData();
+                    setState(() {});
+                  }, child: Text("Show all"))
                 ],
-              )
+              ),
+              SizedBox(
+                height: 100,
+                child: FutureBuilder(
+                  initialData: productList,
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    return ListView.builder(
+                        itemCount: productList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.network(productList[index].url, height: 80,),
+                              Text(productList[index].id.toString()),
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -239,4 +274,5 @@ Widget setTabRowItem(String type, IconData iconData, Color color) {
     ),
   );
 }
+
 

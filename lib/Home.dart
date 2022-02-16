@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'JsonModel.dart';
+import 'package:my_shop/JsonDataModel.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,30 +9,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int currentPage = 0;
-  var pageList= [];
+  var pageList = [];
   late TabController tabController;
-  List<Product> productList= [];
+  List<Product> dataList=[];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController= TabController(length: 3, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     initPages();
-    getProductsData();
+    fetchData();
   }
-
-  void getProductsData(){
+  
+  void fetchData(){
     var response= http.get(Uri.parse("https://jsonplaceholder.typicode.com/photos"));
-    response.then((value) {
+    response.then((value){
       setState(() {
-        productList=productFromJson(value.body);
+        dataList= productFromJson(value.body);
       });
-      print(productList[2].url);
     });
   }
 
-  void initPages(){
+  void initPages() {
     pageList = [
       Container(
         height: Size.infinite.height,
@@ -71,11 +69,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               SizedBox(
                 height: 10,
               ),
-              TabBar(tabs: [
-                Tab(text: "Catagory",),
-                Tab(text: "Brand",),
-                Tab(text: "Shop",),
-              ],
+              TabBar(
+                tabs: [
+                  Tab(
+                    text: "Catagory",
+                  ),
+                  Tab(
+                    text: "Brand",
+                  ),
+                  Tab(
+                    text: "Shop",
+                  ),
+                ],
                 controller: tabController,
                 labelColor: Colors.black,
               ),
@@ -88,17 +93,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            setTabRowItem("Bag & Luggage", Icons.shopping_bag, Colors.blueGrey),
-                            setTabRowItem("Beauty & Body", Icons.accessibility, Colors.cyanAccent),
+                            setTabRowItem("Bag & Luggage", Icons.shopping_bag,
+                                Colors.blueGrey),
+                            setTabRowItem("Beauty & Body", Icons.accessibility,
+                                Colors.cyanAccent),
                             setTabRowItem("Books", Icons.book, Colors.purple),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            setTabRowItem("Burmese Product", Icons.card_giftcard, Colors.redAccent),
-                            setTabRowItem("Material", Icons.construction, Colors.orange),
-                            setTabRowItem("Decoration", Icons.ac_unit, Colors.purpleAccent),
+                            setTabRowItem("Burmese Product",
+                                Icons.card_giftcard, Colors.redAccent),
+                            setTabRowItem(
+                                "Material", Icons.construction, Colors.orange),
+                            setTabRowItem("Decoration", Icons.ac_unit,
+                                Colors.purpleAccent),
                           ],
                         ),
                       ],
@@ -113,31 +123,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Flash Sale"),
-                  TextButton(onPressed: (){
-                    getProductsData();
-                    setState(() {});
-                  }, child: Text("Show all"))
+                  TextButton(onPressed: () {}, child: Text("Show all"))
                 ],
               ),
-              SizedBox(
-                height: 100,
-                child: FutureBuilder(
-                  initialData: productList,
-                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    return ListView.builder(
-                        itemCount: productList.length,
+              FutureBuilder(
+                initialData: dataList,
+                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  return Container(
+                    height: 200,
+                    child: ListView.builder(
+                        itemCount: dataList.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.network(productList[index].url, height: 80,),
-                              Text(productList[index].id.toString()),
-                            ],
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                Image.network(dataList[index].url,
+                                  height: 100,
+                                  width: 100,
+                                ),
+                                Text(dataList[index].id.toString()),
+                              ],
+                            ),
                           );
-                        });
-                  },
-                ),
+                        }),
+                  );
+                  ;
+                },
               ),
             ],
           ),
@@ -250,8 +263,7 @@ Widget setTabRowItem(String type, IconData iconData, Color color) {
             height: 100,
             width: 105,
             decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0)),
+                color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -273,5 +285,3 @@ Widget setTabRowItem(String type, IconData iconData, Color color) {
     ),
   );
 }
-
-
