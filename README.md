@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-## Getting Started
+## Sample Screenshot
 
 <h1 align="center">
   <br>
