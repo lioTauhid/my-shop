@@ -6,7 +6,7 @@ A new Flutter project.
 
 <h1 align="center">
   <br>
-  <a><img src="https://raw.githubusercontent.com/lioTauhid/my-shop/main/Screenshot.png"></a>
+  <a><img src="https://raw.githubusercontent.com/lioTauhid/my-shop/main/Screenshot.jpg"></a>
   <br>
   <br>
 </h1>
